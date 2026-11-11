@@ -1,0 +1,145 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BloodSeva - Blood Donation App | Donate Blood Save Life</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background:#fff}
+.topbar{background:#b71c1c;color:white;font-size:13px;text-align:center;padding:7px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:16px 5%;background:white;position:sticky;top:0;box-shadow:0 2px 10px #00000010;z-index:10}
+.logo{font-size:24px;font-weight:800;color:#d32f2f}
+.logo span{color:#222}
+nav a{margin-left:20px;text-decoration:none;color:#333;font-weight:600;font-size:15px}
+nav a.btn-nav{background:#d32f2f;color:white;padding:9px 18px;border-radius:20px}
+.hero{display:flex;align-items:center;justify-content:space-between;padding:40px 5%;background:linear-gradient(135deg,#fff5f5,#ffe8e8);gap:20px;flex-wrap:wrap}
+.hero-text{flex:1;min-width:300px}
+.hero-text h1{font-size:44px;line-height:1.1;color:#111}
+.hero-text h1 span{color:#d32f2f}
+.hero-text p{color:#555;margin:16px 0;line-height:1.6}
+.hero-btns{display:flex;gap:12px;flex-wrap:wrap}
+.btn{padding:14px 26px;border-radius:30px;border:none;font-size:16px;font-weight:700;cursor:pointer;text-decoration:none;display:inline-block}
+.btn-red{background:#d32f2f;color:white}
+.btn-white{background:white;color:#d32f2f;border:2px solid #d32f2f}
+.hero-img{flex:1;min-width:300px;text-align:center}
+.hero-img .img-box{background:white;border-radius:20px;padding:20px;box-shadow:0 10px 30px #00000015;font-size:80px}
+.search-box{background:white;max-width:900px;margin:-25px auto 0;position:relative;z-index:5;border-radius:16px;box-shadow:0 10px 30px #00000015;padding:18px;display:flex;gap:10px;flex-wrap:wrap;align-items:center}
+.search-box select,.search-box input{flex:1;padding:13px;border:1px solid #ddd;border-radius:10px;min-width:150px}
+.stats{display:flex;justify-content:center;gap:30px;padding:40px 5%;text-align:center;flex-wrap:wrap}
+.stats b{font-size:32px;color:#d32f2f;display:block}
+.stats span{color:#666;font-size:14px}
+.section{padding:30px 5%;text-align:center}
+.section h2{font-size:28px;margin-bottom:8px}
+.section p{color:#666}
+.cards{display:flex;gap:16px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.card{background:white;border:1px solid #eee;border-radius:16px;padding:22px;width:280px;text-align:left;box-shadow:0 4px 15px #00000008}
+.card .emoji{font-size:36px}
+.card h3{margin:10px 0 6px}
+.card p{font-size:14px;line-height:1.5}
+.how{background:#fff5f5;padding:40px 5%;text-align:center}
+.steps{display:flex;gap:16px;justify-content:center;margin-top:20px;flex-wrap:wrap}
+.step{background:white;padding:20px;border-radius:16px;width:220px}
+.step b{background:#d32f2f;color:white;width:36px;height:36px;display:inline-flex;align-items:center;justify-content:center;border-radius:50%}
+.footer{background:#1a1a1a;color:#aaa;text-align:center;padding:25px;font-size:13px}
+.footer b{color:white}
+@media(max-width:700px){.hero-text h1{font-size:32px} nav a:not(.btn-nav){display:none}}
+</style>
+</head>
+<body>
+
+<div class="topbar">📍 Hyderabad | 24/7 Emergency Blood Available | Call: 1800-xxx-xxxx</div>
+
+<nav>
+  <div class="logo">🩸 Blood<span>Seva</span></div>
+  <div>
+    <a href="#">Home</a>
+    <a href="#donors">Find Donor</a>
+    <a href="#how">How it Works</a>
+    <a href="donor.html" class="btn-nav">Become Donor</a>
+  </div>
+</nav>
+
+<!-- HERO - 1st PAGE MAIN -->
+<div class="hero">
+  <div class="hero-text">
+    <p style="color:#d32f2f;font-weight:700;letter-spacing:1px">❤️ DONATE BLOOD • SAVE LIFE</p>
+    <h1>Need Blood?<br><span>Donor in 2 Minutes</span><br>lo Dorukuthadu.</h1>
+    <p>Naku B+ blood kavali, nenu Kukatpally lo unna ante - aa area lo unna donor full details + phone number immediate ga kanipisthadi. No waiting, direct call.</p>
+    <div class="hero-btns">
+      <a href="#search" class="btn btn-red">🔍 Find Donor Now</a>
+      <a href="donor.html" class="btn btn-white">🙋 Become Donor</a>
+    </div>
+    <p style="font-size:13px;margin-top:12px">⭐ 12,500+ Donors • 8,200+ Lives Saved • 100% Free</p>
+  </div>
+  <div class="hero-img">
+    <div class="img-box">🩸<br><span style="font-size:18px;color:#333;font-weight:700">One Drop Can Save<br>One Life</span><br><span style="font-size:13px;color:#888">Your Blood = Someone's Tomorrow</span></div>
+  </div>
+</div>
+
+<!-- SEARCH BOX - MAIN FEATURE -->
+<div class="search-box" id="search">
+  <select id="blood"><option>B+</option><option>A+</option><option>O+</option><option>AB+</option><option>A-</option><option>B-</option><option>O-</option><option>AB-</option></select>
+  <input id="area" placeholder="Enter Area - Ex: Kukatpally, Hyderabad">
+  <button class="btn btn-red" style="flex:0.5" onclick="search()">Search →</button>
+</div>
+<div id="result" style="max-width:900px;margin:15px auto;padding:0 5%"></div>
+
+<div class="stats">
+  <div><b>12,500+</b><span>Registered Donors</span></div>
+  <div><b>8,200+</b><span>Lives Saved</span></div>
+  <div><b>450+</b><span>Hospitals Connected</span></div>
+  <div><b>24/7</b><span>Emergency Support</span></div>
+</div>
+
+<!-- DONOR vs RECIPIENT -->
+<div class="section" id="donors">
+  <h2>Are You a Donor or Recipient?</h2>
+  <p>Neeku edi kavalo dani meeda click chey</p>
+  <div class="cards">
+    <div class="card">
+      <div class="emoji">🙋‍♂️</div><h3>I Want to Donate</h3>
+      <p>Donor ga register avvu. Nee area lo evarikaina blood kavali ante neeku call vasthadi.</p>
+      <br><a href="donor.html" class="btn btn-red" style="padding:10px 18px;font-size:14px">Register as Donor →</a>
+    </div>
+    <div class="card">
+      <div class="emoji">🆘</div><h3>I Need Blood</h3>
+      <p>Recipient ga request pettu. Blood group + area isthe, donors list with phone number vasthadi.</p>
+      <br><a href="recipient.html" class="btn btn-white" style="padding:10px 18px;font-size:14px">Request Blood →</a>
+    </div>
+    <div class="card">
+      <div class="emoji">🏥</div><h3>Hospital / NGO</h3>
+      <p>Hospital kosam bulk blood kavala? Bulk request petti verified donors ni contact chey.</p>
+      <br><a href="#" class="btn btn-white" style="padding:10px 18px;font-size:14px">Hospital Login →</a>
+    </div>
+  </div>
+</div>
+
+<div class="how" id="how">
+  <h2>How It Works? - 3 Steps Only</h2>
+  <div class="steps">
+    <div class="step"><b>1</b><h3 style="margin:10px 0">Register</h3><p style="color:#666;font-size:14px">Donor / Recipient ga details enter chey</p></div>
+    <div class="step"><b>2</b><h3 style="margin:10px 0">Search</h3><p style="color:#666;font-size:14px">B+ + Kukatpally ani search chey</p></div>
+    <div class="step"><b>3</b><h3 style="margin:10px 0">Call & Save</h3><p style="color:#666;font-size:14px">Donor phone number tho direct call chey</p></div>
+  </div>
+</div>
+
+<div class="footer"><b>🩸 BloodSeva</b><br>Developed for College Project | Donate Blood, Save Life<br>Hyderabad, Telangana © 2026</div>
+
+<script>
+let donors=[
+ {name:"Ravi Kumar",blood:"B+",area:"Kukatpally",phone:"9876543210"},
+ {name:"Sai Teja",blood:"B+",area:"Miyapur",phone:"9123456789"},
+ {name:"Priya Sharma",blood:"O+",area:"Kukatpally",phone:"9988776655"}
+];
+function search(){
+  let bg=document.getElementById('blood').value;
+  let area=document.getElementById('area').value.toLowerCase();
+  let f=donors.filter(d=>d.blood===bg && (!area||d.area.toLowerCase().includes(area)));
+  let div=document.getElementById('result');
+  if(f.length===0) div.innerHTML="<p>No donors found, try another area</p>";
+  else div.innerHTML=f.map(d=>`<div style="background:white;padding:14px;border-radius:12px;margin-bottom:8px;display:flex;justify-content:space-between;box-shadow:0 2px 8px #00000010"><div><b>${d.name} - ${d.blood}</b><br><span style="color:#666;font-size:13px">📍 ${d.area} | 📞 ${d.phone}</span></div><a href="tel:${d.phone}" style="background:#2e7d32;color:white;padding:10px 16px;border-radius:20px;text-decoration:none">Call</a></div>`).join('');
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Details - BloodSeva</title>
+<style>
+*{margin:0;padding:0;box-sizing:border-box;font-family:'Segoe UI',Arial}
+body{background:#fff5f5;padding-bottom:30px}
+nav{display:flex;justify-content:space-between;align-items:center;padding:14px 5%;background:white;box-shadow:0 2px 10px #00000010;position:sticky;top:0}
+.logo{font-size:22px;font-weight:800;color:#d32f2f}
+.logo span{color:#222}
+.back{text-decoration:none;color:#d32f2f;font-weight:700}
+.container{max-width:800px;margin:20px auto;padding:0 14px}
+h2{text-align:center}
+.sub{text-align:center;color:#666;font-size:14px;margin:6px 0 16px}
+
+/* DONOR / RECIPIENT TOGGLE */
+.toggle{display:flex;background:#eee;border-radius:30px;padding:5px;max-width:400px;margin:0 auto 18px}
+.toggle button{flex:1;padding:12px;border:none;border-radius:25px;font-size:15px;font-weight:700;cursor:pointer;background:transparent;color:#666}
+.toggle button.active{background:#d32f2f;color:white}
+.toggle button.active.green{background:#2e7d32}
+
+.form-card{background:white;border-radius:18px;padding:20px;box-shadow:0 4px 15px #00000010}
+.form-card h3{margin-bottom:12px}
+label{font-size:13px;font-weight:600;color:#444}
+input,select,textarea{width:100%;padding:12px;margin:5px 0 12px;border:1px solid #ddd;border-radius:10px;font-size:14px;outline:none}
+input:focus{border-color:#d32f2f}
+.row{display:flex;gap:10px}
+.row > div{flex:1}
+.btn{width:100%;background:#d32f2f;color:white;border:none;padding:14px;border-radius:12px;font-size:16px;font-weight:700;cursor:pointer}
+.btn-green{background:#2e7d32}
+.hidden{display:none}
+
+/* CARD DESIGN */
+.result-title{margin:22px 0 10px;font-size:18px}
+.donor-card{background:white;border-radius:16px;padding:16px;margin-bottom:12px;display:flex;justify-content:space-between;gap:12px;box-shadow:0 3px 12px #00000010;border-left:6px solid #d32f2f}
+.donor-card.recipient{border-left-color:#ff9800}
+.donor-card b{font-size:17px}
+.donor-card p{font-size:13px;color:#555;margin:4px 0;line-height:1.5}
+.badge{background:#ffebee;color:#d32f2f;padding:6px 12px;border-radius:20px;font-weight:800;height:fit-content;font-size:15px}
+.call-btn{background:#2e7d32;color:white;text-decoration:none;padding:9px 16px;border-radius:20px;font-size:13px;display:inline-block;margin-top:8px}
+.whats-btn{background:#25D366;color:white;text-decoration:none;padding:9px 14px;border-radius:20px;font-size:13px;display:inline-block;margin-top:8px;margin-left:5px}
+.my-card{border:2px dashed #2e7d32;background:#f1f8e9}
+.success{background:#e8f5e9;color:#2e7d32;padding:12px;border-radius:10px;text-align:center;font-weight:700;margin-bottom:12px;display:none}
+</style>
+</head>
+<body>
+
+<nav><div class="logo">🩸 Blood<span>Seva</span></div><a class="back" href="index.html">← Back to Home</a></nav>
+
+<div class="container">
+<h2>Enter Your Details</h2>
+<p class="sub">Donor va? Recipient va? Select chesi details ivvu ra</p>
+
+<!-- TOGGLE -->
+<div class="toggle">
+  <button id="btnDonor" class="active" onclick="setType('donor')">🙋 I'm Donor</button>
+  <button id="btnRecipient" onclick="setType('recipient')">🆘 I Need Blood</button>
+</div>
+
+<div id="successMsg" class="success">✅ Successfully Saved!</div>
+
+<!-- FORM -->
+<div class="form-card">
+  <h3 id="formTitle">🙋 Donor Registration</h3>
+
+  <label>Full Name *</label>
+  <input id="name" placeholder="Ex: Ravi Kumar">
+
+  <div class="row">
+    <div><label>Mobile Number *</label><input id="phone" placeholder="Ex: 9876543210"></div>
+    <div><label>Age</label><input id="age" type="number" placeholder="Ex: 24"></div>
+  </div>
+
+  <label>Address *</label>
+  <textarea id="address" rows="2" placeholder="Ex: Road No 2, Kukatpally, Hyderabad"></textarea>
+
+  <div class="row">
+    <div><label>Area *</label><input id="area" placeholder="Ex: Kukatpally"></div>
+    <div><label>City</label><input id="city" placeholder="Ex: Hyderabad" value="Hyderabad"></div>
+  </div>
+
+  <div class="row">
+    <div>
+      <label>Blood Group *</label>
+      <select id="blood"><option value="">Select</option><option>A+</option><option>A-</option><option>B+</option><option>B-</option><option>O+</option><option>O-</option><option>AB+</option><option>AB-</option></select>
+    </div>
+    <div id="unitsDiv" class="hidden">
+      <label>Required Units</label>
+      <input id="units" type="number" placeholder="Ex: 2">
+    </div>
+    <div id="lastDiv">
+      <label>Last Donated Date</label>
+      <input id="lastDonated" type="date">
+    </div>
+  </div>
+
+  <!-- Recipient ke extra -->
+  <div id="recipientExtra" class="hidden">
+    <label>Hospital Name</label>
+    <input id="hospital" placeholder="Ex: KIMS Hospital, Secunderabad">
+    <label>Reason / Urgency</label>
+    <select id="urgency"><option>Normal</option><option>Urgent - Today</option><option>Emergency - Now</option></select>
+  </div>
+
+  <button id="submitBtn" class="btn btn-green" onclick="submitForm()">Register as Donor ✅</button>
+</div>
+
+<!-- RESULT AREA -->
+<div id="resultArea"></div>
+<div id="allList"></div>
+</div>
+
+<script>
+let currentType = 'donor';
+let donors = JSON.parse(localStorage.getItem('blood_donors') || '[]');
+let recipients = JSON.parse(localStorage.getItem('blood_recipients') || '[]');
+
+// Demo donors - Recipient search kosam
+if(donors.length===0){
+  donors = [
+    {name:"Ravi Kumar",phone:"9876543210",age:24,address:"Road No 2, Kukatpally",area:"Kukatpally",city:"Hyderabad",blood:"B+",lastDonated:"2026-08-10"},
+    {name:"Sai Teja",phone:"9123456789",age:22,address:"Miyapur, Hyderabad",area:"Miyapur",city:"Hyderabad",blood:"B+",lastDonated:"2026-09-01"},
+    {name:"Priya Sharma",phone:"9988776655",age:26,address:"Kukatpally, Hyderabad",area:"Kukatpally",city:"Hyderabad",blood:"O+",lastDonated:"2026-07-15"},
+    {name:"Anil Verma",phone:"9000123456",age:28,address:"Secunderabad",area:"Secunderabad",city:"Hyderabad",blood:"A+",lastDonated:"2026-06-20"},
+    {name:"Divya Reddy",phone:"9700112233",age:25,address:"Banjara Hills",area:"Banjara Hills",city:"Hyderabad",blood:"B+",lastDonated:"2026-10-05"}
+  ];
+  localStorage.setItem('blood_donors', JSON.stringify(donors));
+}
+
+function setType(type){
+  currentType = type;
+  document.getElementById('btnDonor').classList.toggle('active', type==='donor');
+  document.getElementById('btnRecipient').classList.toggle('active', type==='recipient');
+  document.getElementById('btnRecipient').classList.toggle('green', type==='recipient');
+  document.getElementById('btnDonor').classList.toggle('green', type==='donor');
+
+  if(type==='donor'){
+    document.getElementById('formTitle').innerText = "🙋 Donor Registration";
+    document.getElementById('submitBtn').innerText = "Register as Donor ✅";
+    document.getElementById('submitBtn').className = "btn btn-green";
+    document.getElementById('recipientExtra').classList.add('hidden');
+    document.getElementById('unitsDiv').classList.add('hidden');
+    document.getElementById('lastDiv').classList.remove('hidden');
+  } else {
+    document.getElementById('formTitle').innerText = "🆘 Recipient - Need Blood";
+    document.getElementById('submitBtn').innerText = "Find Donors For Me 🩸";
+    document.getElementById('submitBtn').className = "btn";
+    document.getElementById('recipientExtra').classList.remove('hidden');
+    document.getElementById('unitsDiv').classList.remove('hidden');
+    document.getElementById('lastDiv').classList.add('hidden');
+  }
+  document.getElementById('resultArea').innerHTML = "";
+}
+
+function submitForm(){
+  let data = {
+    name: document.getElementById('name').value.trim(),
+    phone: document.getElementById('phone').value.trim(),
+    age: document.getElementById('age').value,
+    address: document.getElementById('address').value.trim(),
+    area: document.getElementById('area').value.trim(),
+    city: document.getElementById('city').value.trim(),
+    blood: document.getElementById('blood').value,
+    lastDonated: document.getElementById('lastDonated')?.value || "",
+    units: document.getElementById('units')?.value || "",
+    hospital: document.getElementById('hospital')?.value || "",
+    urgency: document.getElementById('urgency')?.value || ""
+  };
+  if(!data.name || !data.phone || !data.address || !data.area || !data.blood){
+    alert("Please fill Name, Mobile, Address, Area, Blood Group *");
+    return;
+  }
+
+  document.getElementById('successMsg').style.display='block';
+  setTimeout(()=>document.getElementById('successMsg').style.display='none',3000);
+
+  if(currentType==='donor'){
+    // 1. DONOR AITHE -> Card kanipinchali
+    donors.push(data);
+    localStorage.setItem('blood_donors', JSON.stringify(donors));
+    document.getElementById('resultArea').innerHTML = `
+      <h3 class="result-title">✅ Your Donor Card Created!</h3>
+      <div class="donor-card my-card">
+        <div>
+          <b>${data.name} 🙋</b>
+          <p>📞 ${data.phone} | Age: ${data.age}</p>
+          <p>📍 ${data.address}, ${data.area}, ${data.city}</p>
+          <p>🗓️ Last Donated: ${data.lastDonated || 'Not yet'}</p>
+          <span style="font-size:12px;background:#2e7d32;color:white;padding:3px 8px;border-radius:10px">● Available Donor</span>
+        </div>
+        <div class="badge">${data.blood}</div>
+      </div>
+      <p style="text-align:center;color:#666;font-size:13px">Nee card ippudu andariki kanipisthadi. Evarikaina kavali ante neeku call vasthadi.</p>
+    `;
+  } else {
+    // 2. RECIPIENT AITHE -> Required Blood Group unna persons kanipinchali
+    recipients.push(data);
+    localStorage.setItem('blood_recipients', JSON.stringify(recipients));
+
+    // Search: Same Blood + Same Area first, lekapothe Same Blood anywhere
+    let matched = donors.filter(d => d.blood===data.blood && d.area.toLowerCase()===data.area.toLowerCase());
+    let otherArea = donors.filter(d => d.blood===data.blood && d.area.toLowerCase()!==data.area.toLowerCase());
+    let allMatched = [...matched, ...otherArea];
+
+    let html = `
+      <h3 class="result-title">🩸 ${data.name} kosam ${data.blood} Blood - ${allMatched.length} Donors Found</h3>
+      <div style="background:#fff3e0;padding:12px;border-radius:12px;margin-bottom:12px;font-size:13px">
+        <b>Your Request:</b> ${data.name} | ${data.blood} | ${data.units} Units | 📍 ${data.area}, ${data.city} | 🏥 ${data.hospital} | ${data.urgency}
+      </div>
+    `;
+    if(allMatched.length===0){
+      html += `<p style="text-align:center;padding:20px;background:white;border-radius:12px">Sorry, ee blood group donor ee area lo leru 😢<br>Try other area / Call Hospital</p>`;
+    } else {
+      html += allMatched.map(d=>`
+        <div class="donor-card recipient">
+          <div>
+            <b>${d.name}</b>
+            <p>📞 ${d.phone} | Age: ${d.age}</p>
+            <p>📍 ${d.address}, ${d.area}, ${d.city}</p>
+            <p>🗓️ Last Donated: ${d.lastDonated || 'N/A'}</p>
+            <a class="call-btn" href="tel:${d.phone}">📞 Call Now</a>
+            <a class="whats-btn" href="https://wa.me/91${d.phone}?text=Hi%20${d.name},%20naku%20${data.blood}%20blood%20kavali%20in%20${data.area}">WhatsApp</a>
+          </div>
+          <div class="badge">${d.blood}</div>
+        </div>
+      `).join('');
+    }
+    document.getElementById('resultArea').innerHTML = html;
+    document.getElementById('resultArea').scrollIntoView({behavior:'smooth'});
+  }
+}
+
+// Page open ayinappudu All Donors chupinchadam
+function showAll(){
+  document.getElementById('allList').innerHTML = `<h3 class="result-title">All Registered Donors (${donors.length})</h3>` + donors.map(d=>`
+    <div class="donor-card"><div><b>${d.name}</b><p>📞 ${d.phone} | 📍 ${d.address}, ${d.area}</p></div><div class="badge">${d.blood}</div></div>
+  `).join('');
+}
+showAll();
+</script>
+</body>
+</html>
